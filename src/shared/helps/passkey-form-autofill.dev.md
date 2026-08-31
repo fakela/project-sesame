@@ -42,7 +42,7 @@ Consider these patterns to improve the passkey experience:
   server, allowing the browser to delete the invalid credential.
 - **Proactive passkey creation:** Prompt users to create a passkey immediately
   after they successfully sign in using a traditional password.
-- **Conditional passkey creation:** Use
+- **Automatic passkey creation:** Use
   [conditional creation](https://developer.chrome.com/docs/identity/webauthn-conditional-create)
   to automatically create a passkey after they sign in using a password and a
   second factor.
