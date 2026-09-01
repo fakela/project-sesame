@@ -50,10 +50,10 @@ Consider these patterns to improve the passkey experience:
   (e.g., scanning a QR code with their phone), prompt them to
   [create a new passkey](https://web.dev/articles/passkey-form-autofill#encourage_creating_a_new_passkey_after_a_cross-device_authentication)
   on the current device for faster future sign-ins.
-- **Synchronize credential state:** Use the WebAuthn Signal API to
+- **Synchronize credential state:** After a user successfully signs in, use the
+  WebAuthn Signal API to
   [signal the list of active passkeys](https://developer.chrome.com/docs/identity/webauthn-signal-api#signal-a-list-of-saved-credentials)
-  or update stored user details to keep passkey information synchronized with
-  your application.
+  and keep passkey information synchronized with your application.
 
 ### Developer resources
 
