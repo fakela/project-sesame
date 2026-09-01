@@ -46,15 +46,16 @@ Consider these patterns to improve the passkey experience:
   [conditional creation](https://developer.chrome.com/docs/identity/webauthn-conditional-create)
   to automatically create a passkey after they sign in using a password and a
   second factor.
-- **Cross-device sign-in:** If a user signs in using a cross-device passkey
-  (e.g., scanning a QR code with their phone), prompt them to
+- **Local passkey creation:** After a successful sign-in using a cross-device
+  passkey (e.g., scanning a QR code with a phone), prompt the user to
   [create a new passkey](https://web.dev/articles/passkey-form-autofill#encourage_creating_a_new_passkey_after_a_cross-device_authentication)
   on the current device for faster future sign-ins.
-- **Synchronize credential state:** After a user successfully signs in, use the
-  WebAuthn Signal API to
-  [signal the list of active passkeys](https://developer.chrome.com/docs/identity/webauthn-signal-api#signal-a-list-of-saved-credentials)
-  and keep passkey information synchronized with your application.
-
+- **Synchronize credential state:** After a user signs in, use the WebAuthn
+  Signal API to
+  [signal the list of active passkeys](https://developer.chrome.com/docs/identity/webauthn-signal-api#signal-a-list-of-saved-credentials),
+  which keeps the credentials stored in the browser synchronized with your
+  application.
+  
 ### Developer resources
 
 - **Guide:** [Sign in with a passkey through form
