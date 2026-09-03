@@ -16,32 +16,35 @@
 
 ## Integrating automatic passkey creation
 
-Automatic passkey creation is implemented via the WebAuthn **Conditional
-Create** API. This API allows password managers to detect when a user signs in
-with a traditional password and offer to upgrade their account to a passkey on
-the spot. This drives passkey adoption by creating a passkey automatically at
-the exact moment they successfully authenticate, without requiring them to
-navigate to a settings page.
+Automatic passkey creation uses the WebAuthn **conditional create** API. Your
+site calls `navigator.credentials.create()` with `mediation: "conditional"`, and
+the password manager silently creates a passkey if its conditions are met. This
+drives passkey adoption by creating a passkey at the moment the user
+authenticates, without sending them to a settings page.
 
-Invoke `navigator.credentials.create()` with `mediation: "conditional"` soon
-after the user successfully authenticates with a traditional password (the
-duration depends on the browser). If you have a second step authentication,
-invoke it after the user successfully signed in.
+Make the call immediately after the user successfully authenticates with a
+traditional password. The password manager checks that a saved password was used
+recently, so the sooner you call it, the better the chance the conditions are
+met. If your sign-in flow includes a second step, make the call once that step is
+complete.
 
-### Key integration conditions:
+### Key integration conditions
 
-- **Saved password:** A password must be saved in the browser's password
-  manager.
-- **Matching password:** The password entered by the user must match the one
-  stored in the password manager.
-- **No existing passkeys:** There must be no existing passkey for this account
-  in the password manager.
-- **Immediate invocation:** `navigator.credentials.create()` must be called
-  shortly after password authentication is completed.
-- **Ignore errors:** To let the user smoothly land on the homepage, gracefully
-  ignore errors caused by a conditional create call.
-- **User presence off:** The resulting credential has a `user presence` off.
-  Make sure you skip the `UP` flag check on the server side.
+- **Saved password:** A password for the site must be saved in the browser's
+  password manager.
+- **Recent password use:** The user must have recently signed in using that
+  saved password.
+- **No existing passkey:** There must be no existing passkey for this account in
+  the password manager.
+- **Immediate invocation:** Call `navigator.credentials.create()` immediately
+  after password authentication completes. The available window varies by
+  browser.
+- **Silent error handling:** Gracefully ignore `InvalidStateError`,
+  `NotAllowedError`, and `AbortError` from a conditional create call. The browser
+  handles these cases silently, so surfacing them only confuses the user.
+- **Skip flag verification:** The registration response returns both `UP` (user
+  presence) and `UV` (user verified) as `false`. Skip both checks when you verify
+  the credential on your server.
 
 ### Learning resources
 
